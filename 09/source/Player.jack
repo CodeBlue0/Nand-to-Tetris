@@ -1,0 +1,112 @@
+class Player {
+
+   field int x, y; // screen location of the square's top-left corner 
+
+   /** Constructs a new square with a given location and size. */
+   constructor Player new(int Ax, int Ay) {
+      let x = Ax;
+		let y = Ay;
+		do draw();
+      return this;
+   }
+
+   /** Disposes this square. */
+   method void dispose() {
+      do Memory.deAlloc(this);
+      return;
+   }
+
+   /** Draws the square on the screen. */
+   method void draw() {
+      do Screen.setColor(true);
+      do drawpixcel(x + (32*y));
+      return;
+   }
+
+   /** Erases the square from the screen. */
+   method void erase() {
+      do erasepixcel(x + (32*y));
+      return;
+   }
+	
+	/** Moves the square left by 2 pixels. */
+   method void moveLeft() {
+      if (x > 0) {
+         do erase();
+         let x = x - 1;
+         do draw();
+      }
+      return;
+   }
+
+   /** Moves the square right by 2 pixels. */
+   method void moveRight() {
+      if (x < 31) {
+         do erase();
+         let x = x + 1;
+         do draw();
+      }
+      return;
+   }
+	
+	method void moveUpDown(int a) {
+      if ((y + a) < 480) {
+			if ((y + a) > 0) {
+				do erase();
+            let y = y + a;
+            do draw();
+			}
+      }
+      return;
+   }
+
+	method void drawpixcel(int location) {
+		var int memAddress;
+		let memAddress = 16384+location;
+		do Memory.poke(memAddress+0, 0);
+		do Memory.poke(memAddress+32, 2912);
+		do Memory.poke(memAddress+64, 5272);
+		do Memory.poke(memAddress+96, 8198);
+		do Memory.poke(memAddress+128, 16385);
+		do Memory.poke(memAddress+160, -30687);
+		do Memory.poke(memAddress+192, -27567);
+		do Memory.poke(memAddress+224, -30687);
+		do Memory.poke(memAddress+256, -32767);
+		do Memory.poke(memAddress+288, -32767);
+		do Memory.poke(memAddress+320, -31871);
+		do Memory.poke(memAddress+352, -32511);
+		do Memory.poke(memAddress+384, 17441);
+		do Memory.poke(memAddress+416, 10834);
+		do Memory.poke(memAddress+448, 12940);
+		do Memory.poke(memAddress+480, 4364);
+		return;
+	}
+	method void erasepixcel(int location) {
+		var int memAddress;
+		let memAddress = 16384+location;
+		do Memory.poke(memAddress+0, 0);
+		do Memory.poke(memAddress+32, 0);
+		do Memory.poke(memAddress+64, 0);
+		do Memory.poke(memAddress+96, 0);
+		do Memory.poke(memAddress+128, 0);
+		do Memory.poke(memAddress+160, 0);
+		do Memory.poke(memAddress+192, 0);
+		do Memory.poke(memAddress+224, 0);
+		do Memory.poke(memAddress+256, 0);
+		do Memory.poke(memAddress+288, 0);
+		do Memory.poke(memAddress+320, 0);
+		do Memory.poke(memAddress+352, 0);
+		do Memory.poke(memAddress+384, 0);
+		do Memory.poke(memAddress+416, 0);
+		do Memory.poke(memAddress+448, 0);
+		do Memory.poke(memAddress+480, 0);
+		return;
+	}
+	
+	method int getX() {
+      return x;
+   }
+	method int getY() {
+      return y;
+   }
+}

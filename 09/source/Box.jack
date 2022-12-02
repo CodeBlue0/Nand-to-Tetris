@@ -1,0 +1,54 @@
+class Box {
+
+   field int x, y; // screen location of the square's top-left corner 
+
+   /** Constructs a new square with a given location and size. */
+   constructor Box new(int Ax, int Ay) {
+      let x = Ax; // 0~31
+      let y = Ay;	// 0~15
+      do draw();
+      return this;
+   }
+
+   /** Disposes this square. */
+   method void dispose() {
+      do Memory.deAlloc(this);
+      return;
+   }
+
+   /** Draws the square on the screen. */
+   method void draw() {
+      do Screen.setColor(true);
+      do drawpixcel(x + (512*y));
+      return;
+   }
+
+   /** Erases the square from the screen. */
+   method void erase() {
+		do Screen.setColor(false);
+      do drawpixcel(x + (512*y));
+      return;
+   }
+
+	method void drawpixcel(int location) {
+		var int memAddress;
+		let memAddress = 16384+location;
+		do Memory.poke(memAddress+0, -1);
+		do Memory.poke(memAddress+32, -31711);
+		do Memory.poke(memAddress+64, -30655);
+		do Memory.poke(memAddress+96, -30589);
+		do Memory.poke(memAddress+128, -28539);
+		do Memory.poke(memAddress+160, -24443);
+		do Memory.poke(memAddress+192, -24311);
+		do Memory.poke(memAddress+224, -24303);
+		do Memory.poke(memAddress+256, -24029);
+		do Memory.poke(memAddress+288, -15325);
+		do Memory.poke(memAddress+320, -15291);
+		do Memory.poke(memAddress+352, -30583);
+		do Memory.poke(memAddress+384, -30447);
+		do Memory.poke(memAddress+416, -28399);
+		do Memory.poke(memAddress+448, -28127);
+		do Memory.poke(memAddress+480, -1);
+		return;
+	}
+}

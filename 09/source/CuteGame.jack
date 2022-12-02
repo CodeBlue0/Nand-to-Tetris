@@ -1,0 +1,113 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/09/Square/SquareGame.jack
+
+/**
+ * Implements the Square Dance game.
+ * This simple game allows the user to move a black square around
+ * the screen, and change the square's size during the movement.
+ * When the game starts, a square of 30 by 30 pixels is shown at the
+ * top-left corner of the screen. The user controls the square as follows.
+ * The 4 arrow keys are used to move the square up, down, left, and right.
+ * The 'z' and 'x' keys are used, respectively, to decrement and increment
+ * the square's size. The 'q' key is used to quit the game.
+ */
+
+class CuteGame {
+	field Rectangle space1, space2, space3;
+   field Player player; // the square of this game
+   
+   /** Constructs a new Square Game. */
+   constructor CuteGame new() {
+      let space1 = Rectangle.new(2,12, 10, 16);
+		let space2 = Rectangle.new(12,13, 15, 16);
+		let space3 = Rectangle.new(20,10, 25, 16);
+		let player = Player.new(2,74);
+      return this;
+   }
+
+   /** Disposes this game. */
+   method void dispose() {
+      do space1.dispose();
+		do space2.dispose();
+		do space3.dispose();
+		do player.dispose();
+      do Memory.deAlloc(this);
+      return;
+   }
+
+   /** Runs the game: handles the user's inputs and moves the square accordingly */
+   method void run() {
+      var char key;  // the key currently pressed by the user
+      var boolean exit;
+		var int acc;
+		var int px, py, ox, oy, oxend, oyend;
+		
+      let exit = false;
+      
+      while (~exit) {
+			let key = 0;
+			let key = Keyboard.keyPressed();
+		
+         // waits for a key to be pressed
+         if (key = 81)  { let exit = true; }     // q key
+         if (key = 131) { let acc = -10; }   // up arrow
+         if (key = 130) { do player.moveLeft(); }   // left arrow
+         if (key = 132) { do player.moveRight(); }   // right arrow
+			do player.moveUpDown(acc);
+			
+			if (acc < 8 ) {
+				let acc = acc + 1;
+			}
+			
+			let px = player.getX();
+			let py = player.getY();
+			let ox = space1.getX();
+			let oxend = space1.getXend();
+			let oy = space1.getY();
+			let oyend = space1.getYend();
+			
+			if ((py > (oy - 25))) {
+				if (px > (ox-1)) {
+					if (px < oxend) {
+						let acc = 0;
+					}
+				}	 
+			}
+			let ox = space2.getX();
+			let oxend = space2.getXend();
+			let oy = space2.getY();
+			let oyend = space2.getYend();
+			
+			if ((py > (oy - 25))) {
+				if (px > (ox-1)) {
+					if (px < oxend) {
+						let acc = 0;
+					}
+				}	 
+			}
+			let ox = space3.getX();
+			let oxend = space3.getXend();
+			let oy = space3.getY();
+			let oyend = space3.getYend();
+			
+			if ((py > (oy - 25))) {
+				if (px > (ox-1)) {
+					if (px < oxend) {
+						let acc = 0;
+					}
+				}	 
+			}
+			if (py > 230) {
+				let acc = 0;
+			}
+			
+			do Sys.wait(100);
+     } // while
+     return;
+   }
+}
+
+
+

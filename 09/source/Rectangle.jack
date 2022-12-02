@@ -1,0 +1,67 @@
+class Rectangle {
+
+   field int x, y, xend, yend, length; // screen location of the square's top-left corner 
+	field Array arr;
+   /** Constructs a new square with a given location and size. */
+   constructor Rectangle new(int Ax, int Ay, int Axend, int Ayend) {
+      var int i, j, k;
+		let x = Ax; // 0~31
+      let y = Ay;	// 0~31
+		let xend = Axend;
+		let yend = Ayend;
+		let length = (xend-x)*(yend-y);
+		let arr = Array.new(length+10);
+		let i = x;
+		let k = 0;
+		while(i < xend) {
+			let j = y;
+			while(j < yend) {
+				let arr[k] = Box.new(i,j);
+				let j = j + 1;
+				let k = k + 1;
+			}
+			let i = i + 1;
+		}
+      return this;
+   }
+
+   /** Disposes this square. */
+   method void dispose() {
+		var int i;
+		var Box tmp;
+		let i = 0;
+		while (i < length) {
+			let tmp = arr[i];
+			do tmp.dispose();
+			let i = i + 1;
+		}
+      do Memory.deAlloc(this);
+      return;
+   }
+
+   /** Erases the square from the screen. */
+   method void erase() {
+		var int i;
+		var Box tmp;
+		let i = 0;
+		while(i < length) {
+			let tmp = arr[i];
+			do tmp.erase();
+			let i = i + 1;
+		}
+      return;
+   }
+	
+	method int getX() {
+		return x;
+	}
+	method int getY() {
+		return y*16;
+	}
+	method int getXend() {
+		return xend;
+	}
+	method int getYend() {
+		return yend*16;
+	}
+}
