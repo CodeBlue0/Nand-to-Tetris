@@ -28,27 +28,17 @@ class Math {
      *  the Jack expressions x*y and multiply(x,y) return the same value.
      */
     function int multiply(int x, int y) {
-        var int sum, shiftedX, i, flag;
+        var int sum, shiftedX, i, tmp;
         let sum = 0;
         let shiftedX = x;
         let i = 1;
-        let flag = 1;
-
-        if (y < 0) {
-            let flag = -1;
-            let y =  -y;
-        }
-
-        while ((i > 0) & ((i < y) | (i = y))) {
-            if (~((y & i) = 0)) {
+        
+        while ((i < y) | (i = y)) {
+            if (~(y & i) = 0) {
                 let sum = sum + shiftedX;
             }
             let shiftedX = shiftedX + shiftedX;
             let i = i + i;
-        }
-
-        if (flag = -1) {
-            let sum = -sum;
         }
         return sum;
     }
@@ -59,42 +49,29 @@ class Math {
      *  the Jack expressions x/y and divide(x,y) return the same value.
      */
     function int divide(int x, int y) {
-        var int q, tmp, flag;
-        let flag = 0;
-        if (x < 0) {
-            let x = -x;
-            let flag = 1;
-        }
+        var int q;
         if ((y > x) | (y < 0)) { return 0; }
         let q = Math.divide(x, 2 * y);
-        if ((x - (2 * q * y)) < y) {
-            let tmp = 2 * q;
-            if (flag = 1) {
-                let tmp = -tmp;
-            }
-            return tmp;
+        if ((x - 2 * q * y) < y) {
+            return 2 * q;
         } else {
-            let tmp = 2 * q + 1;
-            if (flag = 1) {
-                let tmp = -tmp;
-            }
-            return tmp;
+            return 2 * q + 1;
         }
     }
 
     /** Returns the integer part of the square root of x. */
     function int sqrt(int x) {
         var int y, i, tmp ,j;
-        let i = Math.min(x / 2 - 1, 15);
+        let i = x / 2 - 1;
+        let tmp = 1;
         let y = 0;
         while ((i > 0) | (i = 0)) {
             let j = 1;
-            let tmp = 1;
             while (j < i) {
                 let tmp = tmp + tmp;
                 let j = j + 1;
             }
-            if (((y + tmp) * (y + tmp) > 0) & (((y + tmp) * (y + tmp) < x) | ((y + tmp) * (y + tmp) = x))){
+            if (((y + tmp) * (y + tmp) < x) | ((y + tmp) * (y + tmp) = x)){
                 let y = y + tmp;
             }
             let i = i - 1;

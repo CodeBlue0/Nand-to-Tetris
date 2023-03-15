@@ -6,7 +6,7 @@ class Rectangle {
    constructor Rectangle new(int Ax, int Ay, int Axend, int Ayend) {
       var int i, j, k;
 		let x = Ax; // 0~31
-      let y = Ay;	// 0~31
+      	let y = Ay;	// 0~31
 		let xend = Axend;
 		let yend = Ayend;
 		let length = (xend-x)*(yend-y);

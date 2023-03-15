@@ -19,7 +19,7 @@ class String {
      *  and initial length of 0. */
     constructor String new(int maxLength) {
         if (maxLength = 0) {
-            let maxLength = 1;
+            let maxlength = 1;
         }
         let str = Array.new(maxLength);
         let length = 0;

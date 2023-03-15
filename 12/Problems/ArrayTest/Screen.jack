@@ -21,10 +21,10 @@ class Screen {
 
     /** Erases the entire screen. */
     function void clearScreen() {
-        var int addr;
+        var addr;
         let addr = 16384;
         while ((addr < 16384 + 8192) | (addr = 16384 + 8192)) {
-            do Memory.poke(addr, 0);
+            Memory.poke(addr, 0);
         }
         return;
     }
@@ -44,11 +44,11 @@ class Screen {
     function void drawPixel(int x, int y) {
         var int addr, value, i, detx, pos;
         let addr = 16384 + (32 * y) + (x / 16);
-        let value = Memory.peek(addr);
+        value = Memory.peek(addr);
 
         let i = 0;
         let pos = 1;
-        let detx = x - ((x / 16) * 16);
+        detx = x - ((x / 16) * 16);
         while (i < detx) {
             let i = i + 1;
             let pos = pos + pos;
@@ -66,28 +66,16 @@ class Screen {
 
     /** Draws a line from pixel (x1,y1) to pixel (x2,y2), using the current color. */
     function void drawLine(int x1, int y1, int x2, int y2) {
-        var int a, b, diff, dx, dy, dxoffset, dyoffset;
+        var a, b, diff, dx, dy;
         let a = 0;
         let b = 0;
         let dx = x2 - x1;
         let dy = y2 - y1;
-        let dyoffset = 1;
-        let dxoffset = 1;
+        while (((a < dx) | (a = dx)) & (b < dy) | (b = dy)) {
+            do Screen.drawPixel(x + a, y + b);
 
-        if (dy < 0) {
-            let dy = -dy;
-            let dyoffset = -1;
-        }
-        if (dx < 0) {
-            let dx = -dx;
-            let dxoffset = -1;
-        } 
-        let diff = dy - dx;
-        while (((a < dx) | (a = dx)) & ((b < dy) | (b = dy))) {
-            do Screen.drawPixel(x1 + (a * dxoffset), y1 + (b * dyoffset));
-
-            if (diff < 0) {let a = a + 1; let diff = diff + dy;}
-            else {let b = b + 1; let diff = diff - dx;}
+            if (diff < 0) {a = a + 1; diff = diff + dy;}
+            else {b = b + 1; diff = diff - dx;}
         }
         return;
     }
@@ -98,7 +86,7 @@ class Screen {
         var int dy;
         let dy = 0;
         while ((y1 + dy < y2) | (y1 + dy = y2)) {
-            do Screen.drawLine(x1, y1 + dy, x2, y1 + dy);
+            Screen.drawLine(x1, y1 + dy, x2, y1 + dy);
             let dy = dy + 1;
         }
         return;
@@ -112,7 +100,7 @@ class Screen {
             let a = (x - (Math.sqrt((r * r) - (dy * dy))));
             let b = (x + (Math.sqrt((r * r) - (dy * dy))));
             let c = y + dy;
-            do Screen.drawLine(a, c, b, c);
+            do Scree.drawLine(a, c, b, c);
             let dy = dy + 1;
         }
         return;
